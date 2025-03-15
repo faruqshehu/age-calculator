@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Age Calculator</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <link rel="icon" href="./images/favicon-32x32.png" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Age Calculator</h1>
+      <div class="age-container">
+        <div>
+          <p>DAY</p>
+          <input type="text" id="day" required placeholder="DD" />
+        </div>
+
+        <div>
+          <p>MONTH</p>
+          <input type="text" id="month" required placeholder="MM" />
+        </div>
+
+        <div>
+          <p>YEAR</p>
+          <input type="text" id="year" required placeholder="YYYY" />
+        </div>
+
+        <button onclick="calculateAge()">
+          <img src="./images/icon-arrow.svg" alt="" />
+        </button>
+      </div>
+
+      <div class="result-container">
+        <div class="result">
+          <input type="" placeholder="- -" id="result-year" />
+          <h2>Years</h2>
+        </div>
+        <div class="result">
+          <input type="" placeholder="- -" id="result-month" />
+          <h2>Months</h2>
+        </div>
+
+        <div class="result">
+          <input type="" placeholder="- -" id="result-day" />
+          <h2>Days</h2>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function calculateAge() {
+        const day = document.getElementById("day").value;
+
+        const month = document.getElementById("month").value;
+        const year = document.getElementById("year").value;
+
+        const today = new Date();
+        const birthDate = new Date(year, month - 1, day);
+
+        let age = today.getFullYear() - birthDate.getFullYear();
+
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+
+        const dayDiff = today.getDate() - birthDate.getDate();
+
+        if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+          age = age - 1;
+        }
+
+        const calculatedMonth = monthDiff < 0 ? 12 + monthDiff : monthDiff;
+        const daysInPreviousMonth = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          0
+        ).getDate();
+        const calculatedDay =
+          dayDiff < 0 ? daysInPreviousMonth + dayDiff : dayDiff;
+
+        document.getElementById("result-year").value = age;
+        document.getElementById("result-month").value = calculatedMonth;
+        document.getElementById("result-day").value = calculatedDay;
+      }
+    </script>
+  </body>
+</html>
